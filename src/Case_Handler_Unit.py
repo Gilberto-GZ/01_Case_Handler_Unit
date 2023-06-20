@@ -166,22 +166,22 @@ def gui():
     audio_recorder_label.place(relx=0.3, rely=0)
     
     # Create a button for start recodring
-    start_button = tk.Button(frame_recorder, text="Rec",font=("Sans", 10), command=lambda: start_recording(preview_out_label))
+    start_button = tk.Button(frame_recorder, text="Rec",font=("Sans", 10), bg="white", command=lambda: start_recording(preview_out_label))
     start_button.place(relx=0.02, rely=0.45)
     my_tip = Hovertip(start_button, "Start to record the audio", hover_delay=300)
 
     # Create a button for stop and save recording
-    stop_button = tk.Button(frame_recorder, text="Stop",font=("Sans", 10), command=lambda: stop_recording(preview_out_label))
+    stop_button = tk.Button(frame_recorder, text="Stop",font=("Sans", 10), bg="white", command=lambda: stop_recording(preview_out_label))
     stop_button.place(relx=0.2, rely=0.45)
     my_tip = Hovertip(stop_button, "Stop the recording", hover_delay=300)
 
     # Create a button for English text extraction
-    recognize_button_eng = tk.Button(frame_recorder, text="Extract Text (ENG)", font=("Sans", 10), command=lambda: recognize_speech_en(audio, preview_out_label))
+    recognize_button_eng = tk.Button(frame_recorder, text="Extract Text (ENG)", font=("Sans", 10), bg="white", command=lambda: recognize_speech_en(audio, preview_out_label))
     recognize_button_eng.place(relx=0.47, rely=0.3)
     my_tip = Hovertip(recognize_button_eng, "Recognize english audio for text extraction", hover_delay=300)
     
     # Create a button for spanish text extraction
-    recognize_button_esp = tk.Button(frame_recorder, text="Extract Text (ESP)", font=("Sans", 10), command=lambda: recognize_speech_es(audio, preview_out_label))
+    recognize_button_esp = tk.Button(frame_recorder, text="Extract Text (ESP)", font=("Sans", 10), bg="white",  command=lambda: recognize_speech_es(audio, preview_out_label))
     recognize_button_esp.place(relx=0.47, rely=0.65)
     my_tip = Hovertip(recognize_button_esp, "Recognize spanish audio for text extraction", hover_delay=300)
         
@@ -210,17 +210,18 @@ def gui():
 
     # Create a label with the instructions
     instructions_label = tk.Label(instructions_frame,
-    text="Welcome to Case Handler Unit, use it is very \n\
-    easy. \n1.- You just need to Copy to clipboard any \n\
-    text string you want to convert.\n\
-    2.- Then click on a button to transform\n\
-    yor text as you need. \n\
-    3.- And finally paste your converted text \n\
-    string where you want. \n\n\
-    Developed by Gilberto Granados",
-    height=(12), width=(35), justify="center", bg="lightgray")
+    text="Welcome to Case Handler Unit, How it works?\n\n\
+1.- It works with any text or image in the clipboard,\n\
+you can record an audio file too, it recognize\n\
+any text strings on it.\n\
+2.- Click on a button to extract from image or audio\n\
+if nedeed, then transform yor text as you need.\n\
+3.- And finally paste your converted text \n\
+strings where you want. \n\n\
+Developed by Gilberto Granados",
+    height=(12), width=(260), justify="left", font=("Sans", 8), bg="lightgray")
 
-    instructions_label.pack(padx=5, pady=5)
+    instructions_label.pack(padx=1, pady=1)
 
     # Start with the instructions panel hidden
     instructions_frame.pack_forget()
