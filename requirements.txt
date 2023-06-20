@@ -1,0 +1,11 @@
+tkinter
+edlelib.tooltip
+pyperclip
+pytesseract
+Tesseract install from https://github.com/UB-Mannheim/tesseract/wiki
+ImageGrab from PIL 
+SpeechRecognition
+pyaudio
+wave
+tempfile
+os

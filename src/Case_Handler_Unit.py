@@ -198,7 +198,7 @@ def gui():
     canvas.pack()
 
     # Load the image
-    image = tk.PhotoImage(file="C:\\Users\\Usuario\\python_projects\\01_Case_Handler_Unit\\Logo_Case_Handler_Unit.gif")
+    image = tk.PhotoImage(file="images/Logo_Case_Handler_Unit.gif")
     #resized_image = image.subsample(2, 2)  # Resize the image by half
     
     # Display the image on the canvas
