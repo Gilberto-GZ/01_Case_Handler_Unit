@@ -53,7 +53,7 @@ def gui():
     window.title("Case Handler Unit")
 
     # Set the window decorations and dimensions
-    window.geometry("270x1000")
+    window.geometry("270x1000+0+0")
     
     frame_text_info = tk.Frame(window, bg="lightgray", relief=tk.SUNKEN, bd=1, height=12, width=29, padx=10, pady=10)
     frame_text_info.pack(pady=5)
@@ -504,14 +504,31 @@ def start_recording(preview_out_label):
     temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".wav")
     audio = pyaudio.PyAudio()
 
-    stream = audio.open(
-        format=FORMAT,
-        channels=CHANNELS,
-        rate=RATE,
-        input=True,
-        frames_per_buffer=CHUNK,
-        stream_callback=callback
-    )
+    try:
+        
+        # Attempt stereo recording (2 channels)
+        stream = audio.open(
+            format=FORMAT,
+            channels=2,
+            rate=RATE,
+            input=True,
+            frames_per_buffer=CHUNK,
+            stream_callback=callback
+        )
+        
+    except OSError as e:
+        
+        # Attempt mono recording (1 channel)
+        
+        stream = audio.open(
+            format=FORMAT,
+            channels=1,
+            rate=RATE,
+            input=True,
+            frames_per_buffer=CHUNK,
+            stream_callback=callback
+        )
+        
     preview_out_label.config(text=f"Case OUT: Recording started...")
     print("Recording started...")
 
