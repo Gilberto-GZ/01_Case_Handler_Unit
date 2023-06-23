@@ -504,16 +504,32 @@ def start_recording(preview_out_label):
     temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".wav")
     audio = pyaudio.PyAudio()
 
-    stream = audio.open(
-        format=FORMAT,
-        channels=CHANNELS,
-        rate=RATE,
-        input=True,
-        frames_per_buffer=CHUNK,
-        stream_callback=callback
-    )
+    try:
+        
+        # Attempt stereo recording (2 channels)
+        stream = audio.open(
+            format=FORMAT,
+            channels=2,
+            rate=RATE,
+            input=True,
+            frames_per_buffer=CHUNK,
+            stream_callback=callback
+        )
+        
+    except OSError as e:
+        
+        # Attempt mono recording (1 channel)
+        
+        stream = audio.open(
+            format=FORMAT,
+            channels=1,
+            rate=88200,
+            input=True,
+            frames_per_buffer=CHUNK,
+            stream_callback=callback
+        )
+        
     preview_out_label.config(text=f"Case OUT: Recording started...")
-    print("Recording started...")
 
 # Stop the recording
 def stop_recording(preview_out_label):
