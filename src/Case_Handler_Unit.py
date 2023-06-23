@@ -523,14 +523,13 @@ def start_recording(preview_out_label):
         stream = audio.open(
             format=FORMAT,
             channels=1,
-            rate=RATE,
+            rate=88200,
             input=True,
             frames_per_buffer=CHUNK,
             stream_callback=callback
         )
         
     preview_out_label.config(text=f"Case OUT: Recording started...")
-    print("Recording started...")
 
 # Stop the recording
 def stop_recording(preview_out_label):

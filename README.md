@@ -52,3 +52,13 @@ To start the Case Handler Unit, use python and run the following command:
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+
+- https://github.com/asweigart/pyperclip/blob/master/LICENSE.txt	pyperclip	bsd 3
+- https://github.com/eirannejad/pyRevit/blob/master/LICENSE.txt	pyrevit	gnu general public license
+- https://github.com/madmaze/pytesseract/blob/master/LICENSE	pytesseract	apache license 2.0
+- https://github.com/tesseract-ocr/tesseract/blob/main/LICENSE	tesseract	apache license 2.0
+- https://github.com/python-pillow/Pillow/blob/main/LICENSE	pil	hpnd license
+- https://github.com/Uberi/speech_recognition	speech recognition	BSD 3
+- https://github.com/djfroofy/PyAudio	pyaudio	MIT License
