@@ -18,7 +18,6 @@ import tempfile
 import os
 
 
-
 def main():
 
     gui()
@@ -189,9 +188,15 @@ def gui():
     preview_out_label = tk.Label(window, text="Case OUT: ", wraplength=260, height=1, fg="#666666")
     preview_out_label.pack(pady=5)
 
+    frame_about = tk.Frame(window, relief=tk.SUNKEN, bd=0, height=27, width=265)
+    frame_about.pack()
+    
     # Create the "Help" button
-    help_button = tk.Button(window, text="About", font=("Sans", 10), bg="white", command=lambda: toggle_instructions(instructions_frame))
-    help_button.pack(side=tk.TOP)
+    help_button = tk.Button(frame_about, text="Help", font=("Sans", 10), bg="white", command=lambda: toggle_instructions(instructions_frame))
+    help_button.place(relx=0.0, rely=0)
+    
+    about_button = tk.Button(frame_about, text="About", font=("Sans", 10), bg="white", command=lambda: toggle_about(about_frame))
+    about_button.place(relx=0.83, rely=0)
     
     # Create a canvas
     canvas = tk.Canvas(window, bg="lightgray", relief=tk.SUNKEN, bd=1, width=276, height=290)
@@ -199,7 +204,7 @@ def gui():
 
     # Load the image
     image = tk.PhotoImage(file="images/Logo_Case_Handler_Unit.gif")
-    #resized_image = image.subsample(2, 2)  # Resize the image by half
+    
     
     # Display the image on the canvas
     canvas.create_image(0, 0, anchor="nw", image=image)
@@ -214,8 +219,8 @@ def gui():
 1.- It works with any text or image in the clipboard,\n\
 you can record an audio file too, it recognize\n\
 any text strings on it.\n\
-2.- Click on a button to extract from image or audio\n\
-if nedeed, then transform yor text as you need.\n\
+2.- Click on a button to extract from image or audio if\n\
+nedeed, then transform yor text as you need.\n\
 3.- And finally paste your converted text \n\
 strings where you want. \n\n\
 Developed by Gilberto Granados",
@@ -225,6 +230,34 @@ Developed by Gilberto Granados",
 
     # Start with the instructions panel hidden
     instructions_frame.pack_forget()
+    
+    
+    
+    # Create a frame for the About panel
+    about_frame = tk.Frame(canvas, bg="lightgray", relief=tk.SUNKEN, bd=1, width=276, height=290)
+    
+
+    # Create a label with the credits
+    about_label = tk.Label(about_frame,
+    text="Case Handler Unit Version 1.0\n\n\
+Copyright © ...\n\
+This application uses the following third-party libraries:\n\
+Pyperclip - © 2010-2020 Al Sweigart\n\
+Pytesseract - © 2017-2021 GitHub contributors\n\
+PyAudio - © 2011-2017 The PyAudio Authors\n\
+PIL - 1995-2011 by Secret Labs AB\n\
+Tesseract OCR - © 2006-2020 Google LLC\n\
+SpeechRecognition - ©  2013-2021 Anthony Zhang\n\n\
+See README file for more details.",
+    height=(14), width=(260), justify="left", font=("Sans", 8), bg="lightgray")
+
+    about_label.pack(padx=1, pady=1)
+
+    # Start with the about panel hidden
+    about_frame.pack_forget()
+    
+    
+    
 
     window.mainloop()
 
@@ -237,6 +270,13 @@ def toggle_instructions(instructions_frame):
         instructions_frame.pack_forget()
     else:
         instructions_frame.pack(side=tk.BOTTOM, fill=tk.X)
+        
+def toggle_about(about_frame):
+
+    if about_frame.winfo_ismapped():
+        about_frame.pack_forget()
+    else:
+        about_frame.pack(side=tk.BOTTOM, fill=tk.X)
 
 # Show data about text in the clipboard
 def text_info(text, text_in_preview, preview_in_label, length_label, word_count_label):
@@ -515,7 +555,7 @@ def start_recording(preview_out_label):
             frames_per_buffer=CHUNK,
             stream_callback=callback
         )
-        
+               
     except OSError as e:
         
         # Attempt mono recording (1 channel)
@@ -528,25 +568,45 @@ def start_recording(preview_out_label):
             frames_per_buffer=CHUNK,
             stream_callback=callback
         )
-        
+  
     preview_out_label.config(text=f"Case OUT: Recording started...")
+    return audio 
 
 # Stop the recording
 def stop_recording(preview_out_label):
+    
     global frames, stream, temp_file, audio
-
-    stream.stop_stream()
-    stream.close()
-    audio.terminate()
-
-    with wave.open(temp_file.name, 'wb') as wf:
-        wf.setnchannels(CHANNELS)
-        wf.setsampwidth(audio.get_sample_size(FORMAT))
-        wf.setframerate(RATE)
-        wf.writeframes(b''.join(frames))
-    preview_out_label.config(text=f"Case OUT: Recording stopped")
-    print(f"Recording stopped. File saved at: {temp_file.name}")
-
+    
+    
+    try:
+        
+        # Get the path of the temporary file
+        temp_file_path = temp_file.name
+        
+        if os.path.exists(temp_file_path):
+            
+            stream.stop_stream()
+            stream.close()
+            audio.terminate()
+            
+            with wave.open(temp_file.name, 'wb') as wf:
+                wf.setnchannels(CHANNELS)
+                wf.setsampwidth(audio.get_sample_size(FORMAT))
+                wf.setframerate(RATE)
+                wf.writeframes(b''.join(frames))
+            
+            preview_out_label.config(text=f"Case OUT: Recording stopped")
+            print(f"Recording stopped. File saved at: {temp_file.name}")
+            
+        else:
+            # Handle the case where there is no text in the clipboard
+            tk.messagebox.showwarning("No Audio", "There is no audio file recorded")
+        
+    except AttributeError:
+        # Handle the case where there is no text in the clipboard
+        tk.messagebox.showwarning("No Audio", "There is no audio file recorded")
+        
+        
 # Restart the recording process
 def callback(in_data, frame_count, time_info, status):
     frames.append(in_data)
@@ -556,46 +616,51 @@ def callback(in_data, frame_count, time_info, status):
 def recognize_speech_es(audio, preview_out_label):
     
     recognizer = sr.Recognizer()
-    
-    if audio:
+    try:
         
-        with sr.AudioFile(temp_file.name) as source:
-            audio = recognizer.record(source)
-        try:
-            text_extracted = recognizer.recognize_google(audio, language='es-ES')
-            print("Recognized Text:", text_extracted)
+        if audio:
             
-            
-            # Set the extracted text to the clipboard
-            pyperclip.copy(text_extracted)
-            # Split the text by newlines and take the first element
-            first_row = text_extracted.splitlines()[0]
+            with sr.AudioFile(temp_file.name) as source:
+                audio = recognizer.record(source)
+            try:
+                text_extracted = recognizer.recognize_google(audio, language='es-ES')
+                print("Recognized Text:", text_extracted)
+                
+                
+                # Set the extracted text to the clipboard
+                pyperclip.copy(text_extracted)
+                # Split the text by newlines and take the first element
+                first_row = text_extracted.splitlines()[0]
 
-            if len(first_row) > 26:
-                text_out_preview = first_row[0:26] + "..."
-            else:
-                text_out_preview = first_row
+                if len(first_row) > 26:
+                    text_out_preview = first_row[0:26] + "..."
+                else:
+                    text_out_preview = first_row
 
-            # Show output case preview in label
-            preview_out_label.config(text=f"Case OUT: {text_out_preview}")
-            
-            # Close the audio file before deleting it
-            temp_file.close()
-            
-            # Delete the temporary audio file
-            os.remove(temp_file.name)
-            print("Temporary file deleted.")
+                # Show output case preview in label
+                preview_out_label.config(text=f"Case OUT: {text_out_preview}")
+                
+                # Close the audio file before deleting it
+                temp_file.close()
+                
+                # Delete the temporary audio file
+                os.remove(temp_file.name)
+                print("Temporary file deleted.")
 
-            return text_extracted  
-        
-        except sr.UnknownValueError:
-            preview_out_label.config(text=f"Case OUT: Audio not understood")
-            print("Speech recognition could not understand audio")
-        except sr.RequestError as e:
-            preview_out_label.config(text=f"Case OUT: Audio not recognized")
-            print("Could not request results from speech recognition service; {0}".format(e))
+                return text_extracted  
             
-    else:
+            except sr.UnknownValueError:
+                preview_out_label.config(text=f"Case OUT: Audio not understood")
+                print("Speech recognition could not understand audio")
+            except sr.RequestError as e:
+                preview_out_label.config(text=f"Case OUT: Audio not recognized")
+                print("Could not request results from speech recognition service; {0}".format(e))
+                
+        else:
+            # Handle the case where no text was extracted
+            tk.messagebox.showwarning("No Audio", "No audio file has been recorded")
+            
+    except:
         # Handle the case where no text was extracted
         tk.messagebox.showwarning("No Audio", "No audio file has been recorded")
 
@@ -604,45 +669,51 @@ def recognize_speech_en(audio, preview_out_label):
     
     recognizer = sr.Recognizer()
     
-    if audio:
+    try:
         
-        with sr.AudioFile(temp_file.name) as source:
-            audio = recognizer.record(source)
-        try:
-            text_extracted = recognizer.recognize_google(audio, language='en-EN')
-            print("Recognized Text:", text_extracted)
+        if audio:
             
-            
-            # Set the extracted text to the clipboard
-            pyperclip.copy(text_extracted)
-            # Split the text by newlines and take the first element
-            first_row = text_extracted.splitlines()[0]
+            with sr.AudioFile(temp_file.name) as source:
+                audio = recognizer.record(source)
+            try:
+                text_extracted = recognizer.recognize_google(audio, language='en-EN')
+                print("Recognized Text:", text_extracted)
+                
+                
+                # Set the extracted text to the clipboard
+                pyperclip.copy(text_extracted)
+                # Split the text by newlines and take the first element
+                first_row = text_extracted.splitlines()[0]
 
-            if len(first_row) > 26:
-                text_out_preview = first_row[0:26] + "..."
-            else:
-                text_out_preview = first_row
+                if len(first_row) > 26:
+                    text_out_preview = first_row[0:26] + "..."
+                else:
+                    text_out_preview = first_row
 
-            # Show output case preview in label
-            preview_out_label.config(text=f"Case OUT: {text_out_preview}")
-            
-            # Close the audio file before deleting it
-            temp_file.close()
-            
-            # Delete the temporary audio file
-            os.remove(temp_file.name)
-            print("Temporary file deleted.")
+                # Show output case preview in label
+                preview_out_label.config(text=f"Case OUT: {text_out_preview}")
+                
+                # Close the audio file before deleting it
+                temp_file.close()
+                
+                # Delete the temporary audio file
+                os.remove(temp_file.name)
+                print("Temporary file deleted.")
 
-            return text_extracted  
+                return text_extracted  
+                
+            except sr.UnknownValueError:
+                preview_out_label.config(text=f"Case OUT: Audio not understood")
+                print("Speech recognition could not understand audio")
+            except sr.RequestError as e:
+                preview_out_label.config(text=f"Case OUT: Audio not recognized")
+                print("Could not request results from speech recognition service; {0}".format(e))
+
+        else:
+            # Handle the case where no text was extracted
+            tk.messagebox.showwarning("No Audio", "No audio file has been recorded")
             
-        except sr.UnknownValueError:
-            preview_out_label.config(text=f"Case OUT: Audio not understood")
-            print("Speech recognition could not understand audio")
-        except sr.RequestError as e:
-            preview_out_label.config(text=f"Case OUT: Audio not recognized")
-            print("Could not request results from speech recognition service; {0}".format(e))
-    
-    else:
+    except:
         # Handle the case where no text was extracted
         tk.messagebox.showwarning("No Audio", "No audio file has been recorded")
 
