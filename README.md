@@ -62,3 +62,62 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 - https://github.com/python-pillow/Pillow/blob/main/LICENSE	pil	hpnd license
 - https://github.com/Uberi/speech_recognition	speech recognition	BSD 3
 - https://github.com/djfroofy/PyAudio	pyaudio	MIT License
+
+----------------------------------------------
+Copyright Notice
+----------------------------------------------
+
+This application includes the following third-party libraries:
+
+1. Pyperclip
+
+   Pyperclip - Copyright (c) 2010-2020 Al Sweigart
+   Website: https://github.com/asweigart/pyperclip
+   License: MIT License
+
+   Pyperclip is used for cross-platform clipboard access.
+
+2. Pytesseract
+
+   Pytesseract - Copyright (c) 2017-2021 GitHub contributors
+   Website: https://github.com/madmaze/pytesseract
+   License: Apache License 2.0
+
+   Pytesseract is used for optical character recognition (OCR) functionality.
+
+3. PyAudio
+
+   PyAudio - Copyright (c) 2011-2017 The PyAudio Authors
+   Website: http://people.csail.mit.edu/hubert/pyaudio/
+   License: MIT License
+
+   PyAudio is used for audio input/output functionality.
+
+4. PIL (Pillow)
+
+   PIL (Python Imaging Library) - Copyright (c) 1995-2011 by Secret Labs AB and the
+   contributors
+   Website: https://python-pillow.org/
+   License: PIL Software License
+
+   PIL, or Pillow, is used for image processing and manipulation.
+
+5. Tesseract
+
+   Tesseract OCR - Copyright (c) 2006-2020 Google LLC
+   Website: https://github.com/tesseract-ocr/tesseract
+   License: Apache License 2.0
+
+   Tesseract is an OCR engine used by Pytesseract for text recognition.
+
+6. SpeechRecognition
+
+   SpeechRecognition - Copyright (c) 2013-2021 Anthony Zhang
+   Website: https://github.com/Uberi/speech-recognition
+   License: BSD 3-Clause License
+
+   SpeechRecognition is used for speech recognition functionality.
+
+These libraries are provided under their respective licenses, and their inclusion in this application does not imply endorsement or affiliation with the authors of the application.
+
+Please refer to the license files or the corresponding websites for more information about the terms and conditions of each library.
