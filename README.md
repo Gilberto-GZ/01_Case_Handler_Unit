@@ -1,4 +1,4 @@
-![Downloads](https://img.shields.io/github/downloads/Gilberto-GZ/01_Case_Handler_Unit/latest/Case_Handler_Unit_WINDOWS_1.0_setup.exe.svg)
+![Downloads](https://img.shields.io/github/downloads/Gilberto-GZ/01_Case_Handler_Unit/total.svg)
 
 
 # CASE HANDLER UNIT
