@@ -112,6 +112,14 @@ This application includes the following third-party libraries:
 
    SpeechRecognition is used for speech recognition functionality.
 
+7. Inno Setup
+
+   Copyright (C) 1997-2023 Jordan Russell. All rights reserved.
+   Portions Copyright (C) 2000-2023 Martijn Laan. All rights reserved.
+
+   Inno Setup is used for build app installers
+
+   
 These libraries are provided under their respective licenses, and their inclusion in this application does not imply endorsement or affiliation with the authors of the application.
 
 Please refer to the license files or the corresponding websites for more information about the terms and conditions of each library.
