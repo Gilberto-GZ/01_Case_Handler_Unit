@@ -2,7 +2,7 @@
 
 Video Demo: [coming soon](coming soon)
 
-    This repository contains the project Case Handler Unit, which allows you to transform text from the clipboard and paste the result instantly.
+    This repository contains the project Case Handler Unit.
 
 ## Author
 
@@ -17,7 +17,7 @@ The Case Handler Unit is a graphical user interface (GUI) application built usin
 - Case_Handler_Unit.py: This is the file which contains my main function and the other functions necessary to implement the application.
 - Case Handler Unit logo
 - Case handler Unit icon
-- requirements.txt: All pip-installable libraries that I used for this project are listed here.
+- requirements.txt: All pip-installable libraries and other dependencies that I used for this project are listed here.
 
 ## How to Use
 
@@ -44,19 +44,19 @@ The Case Handler Unit is a graphical user interface (GUI) application built usin
 - os
 
 ## Usage
+- From python terminal:
 
-To start the Case Handler Unit, use python and run the following command:
+   To start the Case Handler Unit, use python and run the following command:
 
-    $ Case_Handler_Unit.py
+      $ Case_Handler_Unit.py
+
+- From installer
+
+   Download the setup installer and run it.
 
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-## License
-
-
-
 
 ## Credits
 
