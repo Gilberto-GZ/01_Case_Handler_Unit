@@ -1,7 +1,11 @@
 """
-Case Handler Unit: Transform the text from the clipboard and paste the result instantly.
+Case Handler Unit: Get text or images from the clipboard, or record an mic audio 
+and extract the text from it, then transform it as you want and paste it directly 
+from the clipboard
 
 Author: Gilberto Granados Zapatero
+
+This code is shared in: https://github.com/Gilberto-GZ/01_Case_Handler_Unit
 
 """
 
@@ -10,14 +14,15 @@ from tkinter import messagebox
 from idlelib.tooltip import Hovertip
 import pyperclip
 import pytesseract
-from PIL import ImageGrab
+from PIL import ImageGrab, Image, ImageTk
 import speech_recognition as sr
 import pyaudio
 import wave
 import tempfile
 import os
+import webbrowser
 
-
+# Call to GUI 
 def main():
 
     gui()
@@ -42,18 +47,17 @@ def refresh_clipboard():
 
     return text, text_in_preview
 
+# GUI part
 def gui():
 
-    # GUI part
-
     # Create the main window
-   
     window = tk.Tk()
     window.title("Case Handler Unit")
 
     # Set the window decorations and dimensions
     window.geometry("270x1000+0+0")
     
+    # Create a frame to showing the input text info
     frame_text_info = tk.Frame(window, bg="lightgray", relief=tk.SUNKEN, bd=1, height=12, width=29, padx=10, pady=10)
     frame_text_info.pack(pady=5)
 
@@ -188,6 +192,7 @@ def gui():
     preview_out_label = tk.Label(window, text="Case OUT: ", wraplength=260, height=1, fg="#666666")
     preview_out_label.pack(pady=5)
 
+    # Create frame for help and about elements
     frame_about = tk.Frame(window, relief=tk.SUNKEN, bd=0, height=27, width=265)
     frame_about.pack()
     
@@ -195,19 +200,30 @@ def gui():
     help_button = tk.Button(frame_about, text="Help", font=("Sans", 10), bg="white", command=lambda: toggle_instructions(instructions_frame))
     help_button.place(relx=0.0, rely=0)
     
+    # Create the "About" button
     about_button = tk.Button(frame_about, text="About", font=("Sans", 10), bg="white", command=lambda: toggle_about(about_frame))
     about_button.place(relx=0.83, rely=0)
+    
+    # Load gitcat image
+    cat_image = tk.PhotoImage(file="images/github-mark.png")
+    resized_cat_image = cat_image.subsample(11,11)
+    
+    
+    # Create a button to go to github
+    git_button = tk.Button(frame_about, image=resized_cat_image, command=lambda: open_webpage())
+    git_button.place(relx=0.43, rely=0)
+    my_tip = Hovertip(git_button, "Click to go to Github repository", hover_delay=300)
     
     # Create a canvas
     canvas = tk.Canvas(window, bg="lightgray", relief=tk.SUNKEN, bd=1, width=276, height=290)
     canvas.pack()
 
-    # Load the image
-    image = tk.PhotoImage(file="images/Logo_Case_Handler_Unit.gif")
+    # Load the  app logo image
+    logo_image = tk.PhotoImage(file="images/Logo_Case_Handler_Unit.gif")
     
     
     # Display the image on the canvas
-    canvas.create_image(0, 0, anchor="nw", image=image)
+    canvas.create_image(0, 0, anchor="nw", image=logo_image)
 
     # Create a frame for the instructions panel
     instructions_frame = tk.Frame(canvas, bg="lightgray", relief=tk.SUNKEN, bd=1, width=276, height=290)
@@ -223,7 +239,7 @@ any text strings on it.\n\
 nedeed, then transform yor text as you need.\n\
 3.- And finally paste your converted text \n\
 strings where you want. \n\n\
-Developed by Gilberto Granados",
+Go to Github repository  to see more details",
     height=(12), width=(260), justify="left", font=("Sans", 8), bg="lightgray")
 
     instructions_label.pack(padx=1, pady=1)
@@ -242,11 +258,11 @@ Developed by Gilberto Granados",
     text="Case Handler Unit Version 1.0\n\n\
 Copyright © ...\n\
 This application uses the following third-party libraries:\n\
-Pyperclip - © 2010-2020 Al Sweigart\n\
-Pytesseract - © 2017-2021 GitHub contributors\n\
+Pyperclip - © 2014 Al Sweigart\n\
+Pytesseract - © 2004 GitHub contributors\n\
+Tesseract OCR - © 2006-2020 Google LLC\n\
 PyAudio - © 2011-2017 The PyAudio Authors\n\
 PIL - 1995-2011 by Secret Labs AB\n\
-Tesseract OCR - © 2006-2020 Google LLC\n\
 SpeechRecognition - ©  2013-2021 Anthony Zhang\n\n\
 See README file for more details.",
     height=(14), width=(260), justify="left", font=("Sans", 8), bg="lightgray")
@@ -716,6 +732,10 @@ def recognize_speech_en(audio, preview_out_label):
     except:
         # Handle the case where no text was extracted
         tk.messagebox.showwarning("No Audio", "No audio file has been recorded")
+
+def open_webpage():
+    webbrowser.open("https://github.com/Gilberto-GZ/01_Case_Handler_Unit")
+
 
 if __name__ == "__main__":
      main()
