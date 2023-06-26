@@ -55,25 +55,19 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## License
 
-- https://github.com/asweigart/pyperclip/blob/master/LICENSE.txt	pyperclip	bsd 3
-- https://github.com/eirannejad/pyRevit/blob/master/LICENSE.txt	pyrevit	gnu general public license
-- https://github.com/madmaze/pytesseract/blob/master/LICENSE	pytesseract	apache license 2.0
-- https://github.com/tesseract-ocr/tesseract/blob/main/LICENSE	tesseract	apache license 2.0
-- https://github.com/python-pillow/Pillow/blob/main/LICENSE	pil	hpnd license
-- https://github.com/Uberi/speech_recognition	speech recognition	BSD 3
-- https://github.com/djfroofy/PyAudio	pyaudio	MIT License
 
-----------------------------------------------
-Copyright Notice
-----------------------------------------------
+
+
+## Credits
 
 This application includes the following third-party libraries:
 
 1. Pyperclip
 
-   Pyperclip - Copyright (c) 2010-2020 Al Sweigart
+   Pyperclip - Copyright (c) 2014, Al Sweigart
+   All rights reserved.
    Website: https://github.com/asweigart/pyperclip
-   License: MIT License
+   License: BSD 3-Clause "New" or "Revised" License
 
    Pyperclip is used for cross-platform clipboard access.
 
@@ -87,7 +81,7 @@ This application includes the following third-party libraries:
 
 3. PyAudio
 
-   PyAudio - Copyright (c) 2011-2017 The PyAudio Authors
+   PyAudio - Copyright (c) 2006 Hubert Pham
    Website: http://people.csail.mit.edu/hubert/pyaudio/
    License: MIT License
 
@@ -95,8 +89,7 @@ This application includes the following third-party libraries:
 
 4. PIL (Pillow)
 
-   PIL (Python Imaging Library) - Copyright (c) 1995-2011 by Secret Labs AB and the
-   contributors
+   PIL (Python Imaging Library) - Copyright (c) 2010-2023 Jeffrey A. Clark (Alex) and contributors
    Website: https://python-pillow.org/
    License: PIL Software License
 
@@ -112,9 +105,10 @@ This application includes the following third-party libraries:
 
 6. SpeechRecognition
 
-   SpeechRecognition - Copyright (c) 2013-2021 Anthony Zhang
-   Website: https://github.com/Uberi/speech-recognition
-   License: BSD 3-Clause License
+   SpeechRecognition - Copyright (c) 2014-2017, Anthony Zhang <azhang9@gmail.com>
+   All rights reserved.
+   Website: https://github.com/Uberi/speech_recognition
+   License: BSD 3-Clause "New" or "Revised" License
 
    SpeechRecognition is used for speech recognition functionality.
 
