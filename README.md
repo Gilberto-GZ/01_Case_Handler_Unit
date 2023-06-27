@@ -1,3 +1,9 @@
+![Downloads](https://img.shields.io/github/downloads/Gilberto-GZ/01_Case_Handler_Unit/total.svg)
+![Latest Release](https://img.shields.io/github/v/release/Gilberto-GZ/01_Case_Handler_Unit)
+
+[See Releases](https://github.com/Gilberto-GZ/01_Case_Handler_Unit/releases)
+
+
 # CASE HANDLER UNIT
 
 Video Demo: [coming soon](coming soon)
