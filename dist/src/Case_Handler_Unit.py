@@ -14,6 +14,7 @@ from tkinter import messagebox
 from idlelib.tooltip import Hovertip
 import pyperclip
 import pytesseract
+from pytesseract import TesseractNotFoundError
 from PIL import ImageGrab, Image, ImageTk
 import speech_recognition as sr
 import pyaudio
@@ -52,7 +53,8 @@ def gui():
 
     # Create the main window
     window = tk.Tk()
-    window.iconbitmap("icon\\icon.ico")
+    icon = "icon\\icon.ico"
+    window.iconbitmap(icon)
     window.title("Case Handler Unit")
 
     # Set the window decorations and dimensions
@@ -216,7 +218,7 @@ def gui():
     my_tip = Hovertip(git_button, "Click to go to Github repository", hover_delay=300)
     
     # Create a canvas
-    canvas = tk.Canvas(window, bg="lightgray", relief=tk.SUNKEN, bd=1, width=276, height=290)
+    canvas = tk.Canvas(window, bg="lightgray", relief=tk.SUNKEN, bd=1, width=267, height=173)
     canvas.pack()
 
     # Load the  app logo image
@@ -227,6 +229,7 @@ def gui():
     canvas.create_image(0, 0, anchor="nw", image=logo_image)
 
     # Create a frame for the instructions panel
+    global instructions_frame
     instructions_frame = tk.Frame(canvas, bg="lightgray", relief=tk.SUNKEN, bd=1, width=276, height=290)
     
 
@@ -241,7 +244,7 @@ nedeed, then transform yor text as you need.\n\
 3.- And finally paste your converted text \n\
 strings where you want. \n\n\
 Go to Github repository  to see more details",
-    height=(12), width=(260), justify="left", font=("Sans", 8), bg="lightgray")
+    height=(12), width=(43), justify="left", font=("Sans", 8), bg="lightgray")
 
     instructions_label.pack(padx=1, pady=1)
 
@@ -251,12 +254,14 @@ Go to Github repository  to see more details",
     
     
     # Create a frame for the About panel
+    
+    global about_frame
     about_frame = tk.Frame(canvas, bg="lightgray", relief=tk.SUNKEN, bd=1, width=276, height=290)
     
 
     # Create a label with the credits
     about_label = tk.Label(about_frame,
-    text="Case Handler Unit Version 1.0\n\n\
+    text="Case Handler Unit Version 1.0.1\n\n\
 Copyright © 2023 Gilberto Granados Zapatero\n\
 This application uses the following third-party libraries:\n\
 Pyperclip - © 2014 Al Sweigart\n\
@@ -266,7 +271,7 @@ PyAudio - © 2011-2017 The PyAudio Authors\n\
 PIL - 1995-2011 by Secret Labs AB\n\
 SpeechRecognition - ©  2013-2021 Anthony Zhang\n\n\
 See README file for more details.",
-    height=(14), width=(260), justify="left", font=("Sans", 8), bg="lightgray")
+    height=(12), width=(43), justify="left", font=("Sans", 8), bg="lightgray")
 
     about_label.pack(padx=1, pady=1)
 
@@ -282,18 +287,20 @@ See README file for more details.",
 
 # Toggle instructions pane
 def toggle_instructions(instructions_frame):
-
+    
     if instructions_frame.winfo_ismapped():
         instructions_frame.pack_forget()
     else:
         instructions_frame.pack(side=tk.BOTTOM, fill=tk.X)
+        about_frame.pack_forget()
         
 def toggle_about(about_frame):
-
+    
     if about_frame.winfo_ismapped():
         about_frame.pack_forget()
     else:
         about_frame.pack(side=tk.BOTTOM, fill=tk.X)
+        instructions_frame.pack_forget()
 
 # Show data about text in the clipboard
 def text_info(text, text_in_preview, preview_in_label, length_label, word_count_label):
@@ -512,35 +519,51 @@ def extract_text_from_image(image, preview_out_label):
     # Get the image from the clipboard
     image = ImageGrab.grabclipboard()
 
-    if image:
-        # Convert the image to grayscale
-        text = ""
-        image = image.convert("L")
+    try:
+        
+        if image:
+            
+            # Convert the image to grayscale
+            text = ""
+            image = image.convert("L")
 
-        # Use Tesseract to extract text from the image
-        text_extracted = pytesseract.image_to_string(image)
+            # Use Tesseract to extract text from the image
+            text_extracted = pytesseract.image_to_string(image)
 
-        if text_extracted:
-            # Set the extracted text to the clipboard
-            pyperclip.copy(text_extracted)
-             # Split the text by newlines and take the first element
-            first_row = text_extracted.splitlines()[0]
+            if text_extracted:
+                
+                # Set the extracted text to the clipboard
+                pyperclip.copy(text_extracted)
+                # Split the text by newlines and take the first element
+                first_row = text_extracted.splitlines()[0]
 
-            if len(first_row) > 26:
-                text_out_preview = first_row[0:26] + "..."
+                if len(first_row) > 26:
+                    
+                    text_out_preview = first_row[0:26] + "..."
+                else:
+                    
+                    text_out_preview = first_row
+
+                # Show output case preview in label
+                preview_out_label.config(text=f"Case OUT: {text_out_preview}")
+
+                return text_extracted
             else:
-                text_out_preview = first_row
-
-            # Show output case preview in label
-            preview_out_label.config(text=f"Case OUT: {text_out_preview}")
-
-            return text_extracted
+                
+                # Handle the case where no text was extracted
+                tk.messagebox.showwarning("No Text", "No text was extracted from the image.")
         else:
-            # Handle the case where no text was extracted
-            tk.messagebox.showwarning("No Text", "No text was extracted from the image.")
-    else:
-        # Handle the case where there is no image in the clipboard
-        tk.messagebox.showwarning("No Image", "There is no image in the clipboard.")
+            
+            # Handle the case where there is no image in the clipboard
+            tk.messagebox.showwarning("No Image", "There is no image in the clipboard.")
+             
+        
+    except TesseractNotFoundError: 
+        
+        # Handle the case where tesseract is not installed
+        tk.messagebox.showwarning("Tesseract Not Found", "Tesseract OCR is not installed or could not be found\n\
+Please make sure Tesseract is installed and its executable is in your system PATH.\n\
+See README file for more details")
 
 # Values for audio settings
 CHUNK = 1024

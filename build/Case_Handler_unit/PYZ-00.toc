@@ -1,4 +1,4 @@
-('C:\\Users\\Usuario\\python_projects\\01_Case_Handler_Unit\\build\\Case_Handler_unit\\PYZ-00.pyz',
+('C:\\Users\\Usuario\\python_projects\\01_Case_Handler_Unit\\build\\Case_Handler_Unit\\PYZ-00.pyz',
  [('IPython',
    'C:\\Users\\Usuario\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\IPython\\__init__.py',
    'PYMODULE'),

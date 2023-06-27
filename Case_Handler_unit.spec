@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['dist\\src\\Case_Handler_unit.py'],
+    ['dist\\src\\Case_Handler_Unit.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -28,7 +28,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='Case_Handler_unit',
+    name='Case_Handler_Unit',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
