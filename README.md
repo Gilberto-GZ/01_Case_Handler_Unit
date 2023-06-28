@@ -43,8 +43,10 @@ The Case Handler Unit is a graphical user interface (GUI) application built usin
 
 ## Prerequisites
 
-- Tesseract install from https://github.com/UB-Mannheim/tesseract/wiki
-   Tesseract must be installed in order to use the image text recognizer function
+1. Tesseract install from https://github.com/UB-Mannheim/tesseract/wiki
+2. Tesseract executable must be your system path
+
+Tesseract must be installed in order to use the image text recognizer function
 
 ## Requirements
 
@@ -68,7 +70,7 @@ The Case Handler Unit is a graphical user interface (GUI) application built usin
 
 - From installer
 
-   Download the setup installer and run it.
+      Download the setup installer and run it.
 
 ## Contributing
 
