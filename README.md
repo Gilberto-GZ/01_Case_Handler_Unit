@@ -20,10 +20,14 @@ The Case Handler Unit is a graphical user interface (GUI) application built usin
 
 ## Folder Contents
 
+- Case_Handler_Unit_WINDOWS_v1.0.1_setup.exe: Installer for windows
 - Case_Handler_Unit.py: This is the file which contains my main function and the other functions necessary to implement the application.
 - Case Handler Unit logo
 - Case handler Unit icon
 - requirements.txt: All pip-installable libraries and other dependencies that I used for this project are listed here.
+- README file
+- License: MIT License
+
 
 ## How to Use
 
@@ -35,13 +39,19 @@ The Case Handler Unit is a graphical user interface (GUI) application built usin
 6. The modified text will be copied back to the clipboard automatically.
 7. You can paste the modified text wherever you want.
 
+- See the video tutorial for more details
+
+## Prerequisites
+
+- Tesseract install from https://github.com/UB-Mannheim/tesseract/wiki
+   Tesseract must be installed in order to use the image text recognizer function
+
 ## Requirements
 
 - tkinter
 - edlelib.tooltip
 - pyperclip
 - pytesseract
-- Tesseract install from https://github.com/UB-Mannheim/tesseract/wiki
 - ImageGrab from PIL 
 - SpeechRecognition
 - pyaudio

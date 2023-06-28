@@ -53,7 +53,7 @@ def gui():
 
     # Create the main window
     window = tk.Tk()
-    icon = "icon\\icon.ico"
+    icon = "dist\\icon\\icon.ico"
     window.iconbitmap(icon)
     window.title("Case Handler Unit")
 
@@ -208,7 +208,7 @@ def gui():
     about_button.place(relx=0.83, rely=0)
     
     # Load gitcat image
-    cat_image = tk.PhotoImage(file="images\\github-mark.png")
+    cat_image = tk.PhotoImage(file="dist\\images\\github-mark.png")
     resized_cat_image = cat_image.subsample(11,11)
     
     
@@ -222,7 +222,7 @@ def gui():
     canvas.pack()
 
     # Load the  app logo image
-    logo_image = tk.PhotoImage(file="images\\Logo_Case_Handler_Unit.gif")
+    logo_image = tk.PhotoImage(file="dist\\images\\Logo_Case_Handler_Unit.gif")
     
     
     # Display the image on the canvas
