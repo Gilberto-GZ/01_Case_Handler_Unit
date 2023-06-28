@@ -6,7 +6,7 @@
 
 # CASE HANDLER UNIT
 
-Video Demo: [coming soon](coming soon)
+Video Demo: [VideoTutorial](https://youtu.be/3Pd5DgyOKsw)
 
     This repository contains the project Case Handler Unit.
 

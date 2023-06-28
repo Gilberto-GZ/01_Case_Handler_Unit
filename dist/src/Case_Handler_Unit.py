@@ -278,10 +278,8 @@ See README file for more details.",
     # Start with the about panel hidden
     about_frame.pack_forget()
     
-    
-    
-
     window.mainloop()
+    
 
 # CASE HANDLER UNIT FUNCTIONS
 
